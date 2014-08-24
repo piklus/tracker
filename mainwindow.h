@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QList>
 #include <QVariant>
+#include <QTimer>
 
 #include "backend.h"
 
@@ -22,10 +23,12 @@ public:
 private slots:
     void updateProjectsList(QList<Project*>*);
     void on_projects_currentIndexChanged(int index);
+    void synchronize();
 
 private:
     Ui::MainWindow *ui;
     Backend *backend = new Backend();
+    QTimer *timer = new QTimer(this);
 };
 
 #endif // MAINWINDOW_H

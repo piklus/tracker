@@ -8,8 +8,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     connect(backend, SIGNAL(projectsLoaded(QList<Project*>*)), this, SLOT(updateProjectsList(QList<Project*>*)));
+    connect(timer, SIGNAL(timeout()), this, SLOT(synchronize()));
 
-    backend->loadProjects();
+    timer->setInterval(5000);
+    timer->start();
 }
 
 MainWindow::~MainWindow()
@@ -23,9 +25,16 @@ void MainWindow::on_projects_currentIndexChanged(int index)
 }
 
 void MainWindow::updateProjectsList(QList<Project *> *projects){
+    ui->projects->clear();
+    ui->projects->addItem(tr("Select project..."));
+
     for( int i = 0; i < projects->count(); ++i ){
         ui->projects->addItem(projects->at(i)->name, QVariant(projects->at(i)->id));
     }
 
     delete projects;
+}
+
+void MainWindow::synchronize(){
+    backend->loadProjects();
 }
