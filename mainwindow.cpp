@@ -6,6 +6,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    connect(backend, SIGNAL(projectsLoaded(QList<Project*>*)), this, SLOT(updateProjectsList(QList<Project*>*)));
+
+    backend->loadProjects();
 }
 
 MainWindow::~MainWindow()
@@ -16,4 +20,10 @@ MainWindow::~MainWindow()
 void MainWindow::on_comboBox_currentIndexChanged(int index)
 {
     ui->startTracking->setEnabled( index > 0 );
+}
+
+void MainWindow::updateProjectsList(QList<Project *> *projects){
+    for( int i = 0; i < projects->count(); ++i ){
+        ui->projects->addItem(projects->at(i)->name, QVariant(projects->at(i)->id));
+    }
 }
