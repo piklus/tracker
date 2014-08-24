@@ -20,8 +20,8 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_comboBox_currentIndexChanged(int index);
     void updateProjectsList(QList<Project*>*);
+    void on_projects_currentIndexChanged(int index);
 
 private:
     Ui::MainWindow *ui;

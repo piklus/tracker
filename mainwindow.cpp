@@ -17,7 +17,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_comboBox_currentIndexChanged(int index)
+void MainWindow::on_projects_currentIndexChanged(int index)
 {
     ui->startTracking->setEnabled( index > 0 );
 }
@@ -26,4 +26,6 @@ void MainWindow::updateProjectsList(QList<Project *> *projects){
     for( int i = 0; i < projects->count(); ++i ){
         ui->projects->addItem(projects->at(i)->name, QVariant(projects->at(i)->id));
     }
+
+    delete projects;
 }
